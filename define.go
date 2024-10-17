@@ -41,12 +41,20 @@ type Env interface {
 	Get(key string) any
 	// FilePath 获取插件数据目录(不存在时会自动创建)
 	FilePath() (string, error)
-	// Rule 同 zero.Rule 的用法，在触发前会有一定的规则判断
-	Rule(r zero.Rule) zero.Rule
 	// GetConf 从配置文件获取配置
 	GetConf(conf any) error
 	// GetDB 获取数据库连接
 	GetDB() (*gorm.DB, error)
 	// RangeBot 遍历所有机器人实例
 	RangeBot(yield func(ctx *zero.Ctx) bool)
+	// Groups 获取启用的群
+	Groups() Groups
+}
+
+// Groups 启用的群
+type Groups interface {
+	// RangeGroup 遍历所有启用的群
+	RangeGroup(yield func(group int64) bool)
+	// Rule 同 zero.Rule 在调用前会有启用群判断
+	Rule(r zero.Rule) zero.Rule
 }
