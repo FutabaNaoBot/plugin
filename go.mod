@@ -1,6 +1,6 @@
 module github.com/futabanaobot/plugin
 
-go 1.23.1
+go 1.20
 
 require (
 	github.com/panjf2000/ants/v2 v2.10.0
