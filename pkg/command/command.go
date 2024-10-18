@@ -11,6 +11,15 @@ type Command struct {
 	desc    string
 }
 
+func (c Command) String() string {
+	var builder strings.Builder
+	for _, oneCommand := range c.command {
+		builder.WriteString(fmt.Sprintf("|%s|", oneCommand))
+	}
+	builder.WriteString(fmt.Sprintf(": %s", c.desc))
+	return builder.String()
+}
+
 // NewCommand 创建一个命令
 //
 //	desc: 描述
@@ -34,10 +43,8 @@ func NewCommands(cms ...Command) Commands {
 func (c Commands) String() string {
 	var builder strings.Builder
 	for _, command := range c {
-		for _, oneCommand := range command.command {
-			builder.WriteString(fmt.Sprintf("%s ", oneCommand))
-		}
-		builder.WriteString(fmt.Sprintf(": %s\n", command.desc))
+		builder.WriteString(command.String())
+		builder.WriteByte('\n')
 	}
 	return builder.String()
 }
