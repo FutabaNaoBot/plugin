@@ -7,27 +7,32 @@ import (
 
 // Command 命令，仅作为描述
 type Command struct {
-	command []string
-	desc    string
+	CommandGroup []string
+	Desc         string
 }
 
 func (c Command) String() string {
 	var builder strings.Builder
-	for _, oneCommand := range c.command {
-		builder.WriteString(fmt.Sprintf("|%s|", oneCommand))
+	latest := len(c.CommandGroup) - 1
+	for idx, oneCommand := range c.CommandGroup {
+		if idx == latest {
+			builder.WriteString(fmt.Sprintf("<%s>", oneCommand))
+			break
+		}
+		builder.WriteString(fmt.Sprintf("<%s> ", oneCommand))
 	}
-	builder.WriteString(fmt.Sprintf(": %s", c.desc))
+	builder.WriteString(fmt.Sprintf(": %s", c.Desc))
 	return builder.String()
 }
 
 // NewCommand 创建一个命令
 //
-//	desc: 描述
+//	Desc: 描述
 //	cms: 命令
 func NewCommand(desc string, cms ...string) Command {
 	return Command{
-		command: cms,
-		desc:    desc,
+		CommandGroup: cms,
+		Desc:         desc,
 	}
 }
 
