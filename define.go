@@ -49,16 +49,26 @@ type Env interface {
 	RangeBot(yield func(ctx *zero.Ctx) bool)
 	// Groups 获取启用的群
 	Groups() Groups
-	// IsSuperUser 是否是管理员(超级用户)
-	IsSuperUser(userId int64) bool
+	// SuperUser 获取SuperUser
+	SuperUser() Users
 }
 
 // Groups 启用的群
 type Groups interface {
+	// IsContains 是否包含
+	IsContains(groupId int64) bool
+	// Rule 判断是否是开启的群
+	Rule() zero.Rule
 	// RangeGroup 遍历所有启用的群
 	RangeGroup(yield func(group int64) bool)
-	// Rule 同 zero.Rule 在调用前会有启用群判断
-	Rule(r zero.Rule) zero.Rule
-	// IsEnableGroup 是否是开启的群
-	IsEnableGroup(groupId int64) bool
+}
+
+// Users 用户集合
+type Users interface {
+	// IsContains 是否包含
+	IsContains(userId int64) bool
+	// Rule 判断是否包含
+	Rule() zero.Rule
+	// RangeUser 遍历所有用户
+	RangeUser(yield func(user int64) bool)
 }
