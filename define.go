@@ -51,6 +51,8 @@ type Env interface {
 	Groups() Groups
 	// SuperUser 获取SuperUser
 	SuperUser() Users
+	// Error 提交错误(由上层框架决定如何处理这个错误)
+	Error(ctx *zero.Ctx, err error)
 }
 
 // Groups 启用的群
