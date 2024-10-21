@@ -33,6 +33,8 @@ type Plugin interface {
 	//		return version.NewVersion(1,0,0)
 	//}
 	Version() version.Version
+	// OnBoot engine准备就绪后调用
+	OnBoot()
 }
 
 // Env 插件运行环境
