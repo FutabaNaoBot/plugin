@@ -55,6 +55,8 @@ type Env interface {
 	SuperUser() Users
 	// Error 提交错误(由上层框架决定如何处理这个错误)
 	Error(ctx *zero.Ctx, err error)
+	// GetPlugin 获取对应的插件实例,可通过反射调用其他插件的方法
+	GetPlugin(name string) (p Plugin, ok bool)
 }
 
 // Groups 启用的群
