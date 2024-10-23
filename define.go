@@ -18,15 +18,10 @@ type Plugin interface {
 	// Description 插件描述
 	Description() string
 	// Commands 插件支持的命令描述
-	//  example:
-	//  func (p *myPlugin) Commands() command.Commands  {
-	//		return command.NewCommands(
-	//			command.NewCommand("查看当前时间","time"),
-	//			command.NewCommand("关闭","close","c"),
-	//		)
-	//}
 	Commands() fmt.Stringer
 	// Version 插件版本,使用x.y.z 格式
+	// 在uint64中，前16位为x，中间16位为y，后32位为z
+	// 可通过导入 version(github.com/kohmebot/pkg/version)包来便捷生成
 	//  example:
 	//  func (p *myPlugin) Version() version.Version {
 	//		return version.NewVersion(1,0,0)
