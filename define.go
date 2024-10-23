@@ -31,7 +31,7 @@ type Plugin interface {
 	//  func (p *myPlugin) Version() version.Version {
 	//		return version.NewVersion(1,0,0)
 	//}
-	Version() int64
+	Version() uint64
 	// OnBoot engine准备就绪后调用
 	OnBoot()
 }
