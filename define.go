@@ -1,8 +1,7 @@
 package plugin
 
 import (
-	"github.com/kohmebot/plugin/pkg/command"
-	"github.com/kohmebot/plugin/pkg/version"
+	"fmt"
 	zero "github.com/wdvxdr1123/ZeroBot"
 	"gorm.io/gorm"
 )
@@ -12,7 +11,7 @@ type NewPluginFunc = func() Plugin
 
 // Plugin 所有插件需实现的接口
 type Plugin interface {
-	// Init 初始化插件,在Bot运行前调用
+	// Init 初始化插件(任意有关插件功能逻辑应放在此处进行，而不是在 NewPluginFunc),在Bot运行前调用
 	Init(engine *zero.Engine, env Env) error
 	// Name 插件名称，应具有唯一性
 	Name() string
@@ -26,13 +25,13 @@ type Plugin interface {
 	//			command.NewCommand("关闭","close","c"),
 	//		)
 	//}
-	Commands() command.Commands
+	Commands() fmt.Stringer
 	// Version 插件版本,使用x.y.z 格式
 	//  example:
 	//  func (p *myPlugin) Version() version.Version {
 	//		return version.NewVersion(1,0,0)
 	//}
-	Version() version.Version
+	Version() int64
 	// OnBoot engine准备就绪后调用
 	OnBoot()
 }
@@ -57,6 +56,8 @@ type Env interface {
 	Error(ctx *zero.Ctx, err error)
 	// GetPlugin 获取对应的插件实例,可通过反射调用其他插件的方法
 	GetPlugin(name string) (p Plugin, ok bool)
+	// IsDisable 判断是否被禁用
+	IsDisable() bool
 }
 
 // Groups 启用的群
